@@ -262,6 +262,19 @@ app.patch('/api/v1/supplies/:id', async (req, res) => {
     }
 })
 
+app.get('/api/v1/donate', async(req, res) => {
+
+    try {
+        const result = await donationDataCollection.find({}).toArray()
+        
+        res.status(201).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: "Internal server error"})
+        
+    }
+})
+
 // make a community post
 app.post('/api/v1/community', async(req, res) => {
     const community = req.body
