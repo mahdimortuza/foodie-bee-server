@@ -29,6 +29,9 @@ async function run() {
         const collection = db.collection('supplies');
         const dashboardDataCollection = db.collection('data')
         const donationDataCollection = db.collection('donation')
+        const communityCollection = db.collection('community')
+        const testimonialCollection = db.collection('testimonial')
+        const volunteerCollection = db.collection('volunteer')
 
 
         // User Registration
@@ -259,6 +262,82 @@ app.patch('/api/v1/supplies/:id', async (req, res) => {
     }
 })
 
+// make a community post
+app.post('/api/v1/community', async(req, res) => {
+    const community = req.body
+
+    try {
+        const result  = await communityCollection.insertOne(community)
+        res.status(201).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: "Internal server error"})
+        
+    }
+})
+
+app.get('/api/v1/community', async(req, res) => {
+    try {
+        const result = await communityCollection.find({}).toArray()
+        res.status(200).json(result)
+    } catch (error) {
+        console.log("Error fetching data", error)
+        res.status(500).json({error: "Internal server error"})
+    }
+  })
+
+
+// make a testimonial post
+app.post('/api/v1/testimonial', async(req, res) => {
+    const testimonial = req.body
+
+    try {
+        const result  = await testimonialCollection.insertOne(testimonial)
+        res.status(201).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: "Internal server error"})
+        
+    }
+})
+
+app.get('/api/v1/testimonial', async(req, res) => {
+    try {
+        const result = await testimonialCollection.find({}).toArray()
+        res.status(200).json(result)
+    } catch (error) {
+        console.log("Error fetching data", error)
+        res.status(500).json({error: "Internal server error"})
+    }
+  })
+
+
+  // make a volunteer subscription
+app.post('/api/v1/volunteer', async(req, res) => {
+    const volunteer = req.body
+
+    try {
+        const result  = await volunteerCollection.insertOne(volunteer)
+        res.status(201).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({error: "Internal server error"})
+        
+    }
+})
+
+app.get('/api/v1/volunteer', async(req, res) => {
+    try {
+        const result = await volunteerCollection.find({}).toArray()
+        res.status(200).json(result)
+    } catch (error) {
+        console.log("Error fetching data", error)
+        res.status(500).json({error: "Internal server error"})
+    }
+  })
+
+
+
         // Start the server
         app.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);
@@ -267,6 +346,8 @@ app.patch('/api/v1/supplies/:id', async (req, res) => {
     } finally {
     }
 }
+
+
 
 run().catch(console.dir);
 
