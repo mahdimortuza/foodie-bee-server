@@ -265,8 +265,10 @@ app.patch('/api/v1/supplies/:id', async (req, res) => {
 app.get('/api/v1/donate', async(req, res) => {
 
     try {
-        const result = await donationDataCollection.find({}).toArray()
-        
+        const result =  await donationDataCollection.find({}).toArray()
+
+        const sortedDonors = result.sort((a, b) => b.amount - a.amount);
+
         res.status(201).json(result)
     } catch (error) {
         console.log(error)
