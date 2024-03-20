@@ -158,8 +158,7 @@ app.get('/api/v1/supplies/:id', async(req, res) => {
 // update supply data into db
 app.patch('/api/v1/supplies/:id', async (req, res) => {
     const supplyId = req.params.id;
-    const updatedSupplyData = req.body;
-
+    const updatedSupplyData = req.body; 
     try {
       const result = await collection.updateOne(
         { _id: new ObjectId(supplyId) },
